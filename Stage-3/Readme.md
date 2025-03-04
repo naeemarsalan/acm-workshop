@@ -80,16 +80,3 @@ helm uninstall check-pods-pipeline -n <your-namespace>
 
 This Helm chart ensures your OpenShift pods are **ready** before further actions, providing a reliable automation workflow. 🚀
 
-
-
-By the end of this workshop, you will have accomplished the following:
-
-Pipeline Deployment: Set up a pipeline to monitor workload health.
-Deploy Bookinfo App: Deploy a real-world microservices application.
-Create Monitoring Pipelines:
-Ensure the health of the Bookinfo application.
-Verify that ClusterLogForwarder exists for container logs.
-ACM Integration: Utilize ACM (Advanced Cluster Management) to streamline deployment and enforce consistency.
-Monitoring & Verification: Track relevant events and validate deployment correctness.
-Drift Management: Implement strategies to detect and correct configuration drift.
-Policy Validation: Define and enforce policies to ensure pipeline and infrastructure consistency.
