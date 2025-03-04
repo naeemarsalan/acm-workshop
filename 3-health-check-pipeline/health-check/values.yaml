@@ -1,3 +1,0 @@
-# values.yaml
-projectName: my-project
-schedule: "0 * * * *" # Runs every hour
