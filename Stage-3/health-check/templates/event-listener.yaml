@@ -1,0 +1,12 @@
+apiVersion: triggers.tekton.dev/v1beta1
+kind: EventListener
+metadata:
+  name: check-pods-ready-listener
+spec:
+  triggers:
+    - name: check-pods-trigger
+      bindings:
+        - ref: check-pods-ready-binding
+      template:
+        ref: check-pods-ready-trigger-template
+

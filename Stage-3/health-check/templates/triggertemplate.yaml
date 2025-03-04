@@ -1,0 +1,20 @@
+apiVersion: triggers.tekton.dev/v1beta1
+kind: TriggerTemplate
+metadata:
+  name: check-pods-ready-trigger-template
+spec:
+  params:
+    - name: project-name
+      description: "The OpenShift project to check"
+  resourcetemplates:
+    - apiVersion: tekton.dev/v1beta1
+      kind: PipelineRun
+      metadata:
+        generateName: check-pods-ready-run-
+      spec:
+        pipelineRef:
+          name: check-pods-ready
+        params:
+          - name: project-name
+            value: "$(tt.params.project-name)"
+
