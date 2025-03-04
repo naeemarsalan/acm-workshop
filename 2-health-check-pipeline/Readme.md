@@ -1,71 +1,81 @@
----
+# **OpenShift Pipeline: Check Pods Readiness**
 
-# **OpenShift Pipeline: Check Pods Readiness**  
-
-This guide walks you through setting up a **Tekton pipeline** to monitor the health of all pods in an OpenShift project. The pipeline ensures that all pods are in a **Ready** state before proceeding.  
+This project provides a **Helm chart** to deploy a **Tekton pipeline** that monitors the health of all pods in an OpenShift project. The pipeline ensures that all bookinfo pods reach a **Ready** state before proceeding.
 
 ---
 
-## **Prerequisites**  
-Before running the pipeline, ensure you have:  
-✅ Access to an OpenShift cluster  
-✅ The OpenShift CLI (`oc`) installed  
-✅ Tekton (`tkn`) installed and configured  
-✅ Your own project selected
+## **Why Use a Helm Chart?**
+
+Using Helm allows for easy deployment and configuration management. Since the **project name** needs to be dynamically overridden per environment, Helm enables this by allowing values to be customized at install time.
+
+### **Benefits of Helm:**
+- **Parameter Overrides** – Easily configure values like project names without modifying YAML files.
+- **Simplified Deployment** – One command deploys all Tekton resources.
+- **Version Control** – Helm makes upgrades, rollbacks, and versioning easier.
+- **Reusable & Scalable** – The same chart can be used across different environments.
 
 ---
 
-## **Step 1: Create a Service Account**  
+## **Tekton Resources Explained**
 
-The pipeline requires a **ServiceAccount** with sufficient permissions to check pod status. Create and assign the required permissions:  
+The Helm chart deploys the following Tekton resources:
 
-### **1.1 Create the Service Account**
+### **1️⃣ Pipeline**
+- Defines the process to check if pods in a project are ready.
+- Uses a parameterized **project name** so it can work in multiple environments.
+
+### **2️⃣ PipelineRun (Triggered via EventListener & CronJob)**
+- Instantiates a new run of the pipeline when triggered.
+- Uses the **project name** override set via Helm values.
+
+### **3️⃣ TriggerTemplate**
+- Defines how the pipeline is triggered dynamically.
+- Generates a `PipelineRun` with the correct project name.
+
+### **4️⃣ TriggerBinding**
+- Binds the incoming request (e.g., from a cron job) to the pipeline parameters.
+- Ensures the correct project name is passed when the pipeline runs.
+
+### **5️⃣ EventListener**
+- Exposes an HTTP endpoint that listens for incoming requests to start the pipeline.
+- Can be triggered by a **CronJob** or external event.
+
+### **6️⃣ OpenShift CronJob**
+- Automates the pipeline execution at scheduled intervals.
+- Calls the **EventListener** to start a pipeline run at the defined schedule (e.g., every 5 minutes).
+
+---
+
+## **Installation**
+
+To deploy the pipeline using Helm:
+
 ```sh
-oc create sa pipeline-sa 
+helm install check-pods-pipeline ./health-check -n <your-namespace> \
+  --set projectName=<your-project> \
+  --set schedule="0/5 * * * *" 
 ```
 
-### **1.2 Assign Permissions**
-```sh
-oc adm policy add-role-to-user edit -z pipeline-sa 
----
+To update an existing deployment:
 
-## **Step 2: Deploy the Tekton Pipeline**  
-
-### **2.1 Apply the Pipeline Definition**  
-```
-Apply the pipeline:
 ```sh
-oc apply -f check-pods-pipeline.yaml 
+helm upgrade check-pods-pipeline ./health-check -n <your-namespace> \
+  --set projectName=<your-project> \
+  --set schedule="0/5 * * * *" 
 ```
 
----
+To uninstall:
 
-## **Step 3: Run the Pipeline**  
-
-Start the pipeline with:  
 ```sh
-tkn pipeline start check-pods-ready \
-  -p project-name=<your-project> \
-  --serviceaccount pipeline-sa \
-  -n <your-namespace>
-```
-
-Monitor execution:  
-```sh
-tkn pipelinerun logs -f -n <your-namespace>
+helm uninstall check-pods-pipeline -n <your-namespace>
 ```
 
 ---
 
-## **Step 4: Verify Results**  
-If all pods are **ready**, the pipeline will complete successfully. Otherwise, it will time out or fail, indicating issues with the pods.
+## **Summary**
+✔ Deploys a Tekton pipeline to monitor pod readiness.
+✔ Uses Helm to simplify deployment and configuration.
+✔ Automates execution with an EventListener and a CronJob.
+✔ Enables easy project name overrides for multi-environment support.
 
----
-
-### **🎯 Summary**  
-✔ Created a **ServiceAccount** with the required permissions  
-✔ Defined a **Tekton pipeline** to check for pod readiness  
-✔ Deployed and executed the **pipeline**  
-
-Now, your OpenShift pipeline can automatically ensure all pods are running before further deployment steps! 🚀  
-
+This Helm chart ensures your OpenShift pods are **ready** before further actions, providing a reliable automation workflow. 🚀

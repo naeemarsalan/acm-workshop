@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: trigger-check-pods-ready
+spec:
+  schedule: {{ .Values.schedule }}  # Runs every 5 minutes
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: curl-trigger
+              image: curlimages/curl:latest
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  curl -s -X POST http://el-check-pods-ready-listener.{{ .Values.projectName }}.svc.cluster.local:8080 \
+                  -d '{"project-name": "{{ .Values.projectName }}"}'
+          restartPolicy: OnFailure
+

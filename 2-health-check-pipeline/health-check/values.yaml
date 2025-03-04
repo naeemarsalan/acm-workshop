@@ -1,0 +1,3 @@
+# values.yaml
+projectName: anaeem 
+schedule: "0 * * * *" # Runs every hour

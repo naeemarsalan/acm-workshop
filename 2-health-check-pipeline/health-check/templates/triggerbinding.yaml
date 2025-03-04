@@ -1,0 +1,9 @@
+apiVersion: triggers.tekton.dev/v1beta1
+kind: TriggerBinding
+metadata:
+  name: check-pods-ready-binding
+spec:
+  params:
+    - name: project-name
+      value: {{ .Values.projectName }}
+
