@@ -64,6 +64,16 @@ helm upgrade check-pods-pipeline ./health-check -n <your-namespace> \
   --set schedule="0/5 * * * *" 
 ```
 
+---
+
+You can check the cronjob, and see if jobs have been run. CronJob is schudled for 5 mins.
+
+```sh
+oc get cronjobs
+oc get jobs
+```
+
+---
 To uninstall:
 
 ```sh
