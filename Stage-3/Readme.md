@@ -73,10 +73,10 @@ helm uninstall check-pods-pipeline -n <your-namespace>
 ---
 
 ## **Summary**
-✔ Deploys a Tekton pipeline to monitor pod readiness.
-✔ Uses Helm to simplify deployment and configuration.
-✔ Automates execution with an EventListener and a CronJob.
-✔ Enables easy project name overrides for multi-environment support.
+- [x] Deploys a Tekton pipeline to monitor pod readiness.
+- [x] Uses Helm to simplify deployment and configuration.
+- [x] Automates execution with an EventListener and a CronJob.
+- [x] Enables easy project name overrides for multi-environment support.
 
 This Helm chart ensures your OpenShift pods are **ready** before further actions, providing a reliable automation workflow. 🚀
 
