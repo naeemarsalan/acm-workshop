@@ -61,6 +61,11 @@ tkn pipelinerun logs -f -n <your-namespace>
 ## **Step 4: Verify Results**  
 If all pods are **ready**, the pipeline will complete successfully. Otherwise, it will time out or fail, indicating issues with the pods.
 
+## **Step 5: Clean Up**  
+```sh
+oc delete pipeline/check-pods-ready
+```
+
 ---
 
 ### **🎯 Summary**  
