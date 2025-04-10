@@ -1,4 +1,8 @@
-helm:
-  values: |
-    projectName: anaeem
-    schedule: "0/5 * * * *"
+     - helm:
+          values: |
+            projectName: anaeem
+            schedule: "0/5 * * * *"
+          path: Stage-3/health-check
+          repoURL: https://github.com/naeemarsalan/acm-workshop.git
+          targetRevision: main
+          repositoryType: git
