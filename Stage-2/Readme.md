@@ -25,9 +25,8 @@ oc create sa pipeline-sa
 ### **1.2 Assign Permissions**
 ```sh
 oc adm policy add-role-to-user edit -z pipeline-sa 
----
 ```
-
+---
 ## **Step 2: Deploy the Tekton Pipeline**  
 
 ### **2.1 Apply the Pipeline Definition**  
