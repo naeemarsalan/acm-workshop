@@ -2,7 +2,7 @@
 
 # **Deploying Bookinfo to Your OpenShift Project**
 
-In this step, you will create your own project and deploy the **Bookinfo** application on the downstream cluster named **"dev"**. Ensure you are logged into the cluster before proceeding.
+In this step, you will create your own project and deploy the **Bookinfo** application on the downstream cluster named **"local-cluster"**. Ensure you are logged into the cluster before proceeding.
 
 ## **Steps to Follow**
 
@@ -37,12 +37,13 @@ In this step, you will create your own project and deploy the **Bookinfo** appli
    ```
 
 5. **Retrieve the Route URL**  
+   Note that this url is http not https. Modern browsers will redirect to https, this will not resolve.
    Get the URL of the exposed service to access the application:  
    ```sh
-   oc get route productpage -o jsonpath='{.spec.host}'
+   echo "http://$(oc get route productpage -o jsonpath='{.spec.host}')"
    ```
 
-Once these steps are complete, your Bookinfo application should be up and running in your project on the **"dev"** cluster. 🚀
+Once these steps are complete, your Bookinfo application should be up and running in your project on the **"local-cluster"** cluster. 🚀
 
 ---
 
