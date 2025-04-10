@@ -38,7 +38,9 @@ oc apply -f check-pods-pipeline.yaml
 ---
 
 ## **Step 3: Run the Pipeline**  
+You can start pipeline UI, Select "local-cluster", Pipelines, Select your project, click 3 dots next to your pipeline, click Start
 
+You can start pipeline CLI, see exmaple below. 
 Start the pipeline with:  
 ```sh
 tkn pipeline start check-pods-ready \
@@ -48,6 +50,8 @@ tkn pipeline start check-pods-ready \
 ```
 
 Monitor execution:  
+You can click PipelineRuns, Pipeline -> PipelineRuns, Select PipelineRun, Select Logs
+Below is CLI example.
 ```sh
 tkn pipelinerun logs -f -n <your-namespace>
 ```
