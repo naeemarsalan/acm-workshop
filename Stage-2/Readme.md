@@ -1,5 +1,3 @@
----
-
 # **OpenShift Pipeline: Check Pods Readiness**  
 
 This guide walks you through setting up a **Tekton pipeline** to monitor the health of all pods in an OpenShift project. The pipeline ensures that all pods are in a **Ready** state before proceeding.  
@@ -28,11 +26,11 @@ oc create sa pipeline-sa
 ```sh
 oc adm policy add-role-to-user edit -z pipeline-sa 
 ---
+```
 
 ## **Step 2: Deploy the Tekton Pipeline**  
 
 ### **2.1 Apply the Pipeline Definition**  
-```
 Apply the pipeline:
 ```sh
 oc apply -f check-pods-pipeline.yaml 
